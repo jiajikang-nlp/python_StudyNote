@@ -2486,7 +2486,7 @@ gender = 男
 
 # 十、集合
 
-创建集合使用 `{}` 或者 `set()`，但是如果要创建空集合只能使用 `set()`，因为 `{}` 用来创建空字典。
+创建集合使用 `{}` 或者 `set()`，但是如果要创建空集合只能使用 `set()`，因为 `{}` 用来创建空字典。
 
 ```python
 s1 = {10,20,30,40,50}
@@ -2589,7 +2589,7 @@ print(10 not in s1) # False
 
 ## 11.1 运算符
 
- ![1587273639917](assets/1587273639917.png)
+ ![1587273639917](assets/1587273639917.png)
 
 
 
@@ -2672,7 +2672,7 @@ print('name' in dict1)
 
 # 十二、公共方法
 
- ![1587276667009](assets/1587276667009.png)
+ ![1587276667009](assets/1587276667009.png)
 
 ## 12.1 len()
 
@@ -3457,7 +3457,7 @@ result = test1()
 test2(result) # 50
 ```
 
-  
+  
 
 ## 16.4 函数的返回值
 
@@ -3489,7 +3489,7 @@ print(result)#(1,2)是一个元组
 
 注意：
 
-1. `return a,b` 写法，返回多个数据的时候，默认是元组类型。
+1. `return a,b` 写法，返回多个数据的时候，默认是元组类型。
 2. return后面可以连接列表、元组或字典，以返回多个值。
 
 
@@ -3594,4 +3594,1253 @@ print(b) # age
 print(dict1[a]) # tom
 print(dict1[b]) # 18
 ```
+
+### 16.6.2 交换变量值
+
+需求：有变量 `a=10` 和 `b=20` ，交换两个变量的值。
+
+- 方法一
+
+借助第三变量存储数据
+
+```python
+# 1、定义中间变量
+c = 0
+# 2、将a的数据存储到c
+c = a
+# 3、将b的数据20复制到a，此时a=20
+a = b
+# 4、将之前c的数据10赋值到b，此时b = 10
+b = c
+print(a) # 20
+print(b) # 10
+```
+
+- 方法二
+
+```python
+a, b = 1,2
+a, b = b,a
+print(a) # 2
+print(b) # 1
+```
+
+### 16.6.3 引用
+
+#### 16.6.3.1 **了解引用**
+
+在python中，值是靠引用传递来的。
+
+我们可以用 `id` 来判断两个变量是否为同一个值的引用。我们可以将id值理解为那块内存的地址标识。
+
+```python
+# 1、int类型
+a = 1
+b = a
+print(b) # 1
+print(id(a)) # 1617604832
+print(id(b)) # 1617604832
+
+a = 2
+print(b) # 1、说明int类型为不可变类型
+```
+
+#### 16.6.3.2 可变类型
+
+```python
+#2、列表
+aa = [10,20]
+bb = aa
+
+print(id(aa)) # 1470481080200
+print(id(bb)) # 1470481080200
+
+aa.append(30)
+print(bb) # [10, 20, 30]  列表为可变类型
+
+print(id(aa)) # 2125878697864
+print(id(bb))  #2125878697864
+```
+
+#### 16.6.3.3 引用当做实参
+
+```python
+def test1(a):
+    print(a) # 100
+    print(id(a)) # 1617608000
+
+    a += a
+
+    print(a) # 200
+    print(id(a)) # s
+
+# int:计算前后id值不同
+b = 100
+test1(b)
+
+#列表：计算前后id值不同
+c = [11,12]
+test1(c)
+
+"""
+[11, 12]
+2728354815880
+[11, 12, 11, 12]
+2728354815880
+
+"""
+```
+
+#### 16.6.3.4 可变和不可变类型
+
+所谓可变类型与不可变类型是指：数据能够直接进行修改，如果能直接修改那么就是可变，否则是不可变。
+
+- 可变类型
+
+    列表
+
+    字典
+
+    集合
+
+- 不可变类型
+
+    整型
+
+    浮点型
+
+    字符串
+
+    元组
+
+# 十七、函数加强
+
+**目标**
+
+- 应用：学员管理系统
+- 递归
+- lambda表达式
+- 高阶函数
+
+## 17.1 应用：学员管理系统
+
+**1.1 吸引简介**
+
+需求：进入系统显示功能界面，功能如下：
+
+- 添加学员
+- 删除学员
+- 修改学员信息
+- 查询学员信息
+
+系统共6个功能，用户根据自己需求选取
+
+## 17.2 步骤分析
+
+1、显示功能界面
+
+2、用户输入功能序号
+
+3、根据用户输入的功能序号，执行不能的功能（函数）
+
+​     3.1 定义函数
+
+​     3.2 调用函数
+
+## 17.3 需求实现
+
+### 17.3.1 显示功能界面
+
+定义函数 `print_info` ，负责显示系统功能。
+
+```python
+# 定义功能界面函数
+def info_print():
+    print('请选择功能-------')
+    print('1、添加学员')
+    print('2、删除学员')
+    print('3、修改学员')
+    print('4、查询学员')
+    print('5、显示所有学员')
+    print('6、退出系统')
+    print('-' * 20)
+
+
+# 系统功能需要循环使用，直到用户输入6，退出系统
+while True:
+    # 1、显示功能界面
+    info_print()
+
+    # 2、用户输入功能序号
+    user_num = int(input('请输入功能序号：'))
+
+    # 3、按照用户输入的功能序号，执行不同的界面
+    # 如果用户输入1、执行添加...... ----多重判断
+    if user_num == 1:
+        print('添加')
+    elif user_num == 2:
+        print('删除')
+    elif user_num == 3:
+        print('修改')
+    elif user_num == 4:
+        print('查询')
+    elif user_num == 5:
+        print('显示所有')
+    elif user_num == 6:
+        print('退出系统')
+        break
+    else:
+        print('输入的功能序号有误')
+```
+
+### 17.3.2 定义不同功能的函数
+
+所有功能函数都是操作学员信息，所有存储所有学员信息应该是一个==全局变量==，数据类型为==列表==。
+
+```
+info = []
+```
+
+#### 17.3.2.1 添加学员
+
+- 需求分析
+
+    1、接收用户输入学员信息，并保存
+
+    2、判断是否添加学员信息
+
+    ​      2.1 如果学员姓名已经存在，则报错提示
+
+    ​      2.2 如果学员姓名不存在，则准备空字典，将用户输入的数据追加的字典，再列表追加字典数据
+
+    3、对应的if条件成立的位置调用该函数
+
+- 代码实现
+
+```python
+# 等待存储所有学员的信息
+info = []
+# 添加学员信息的函数
+def add_info():
+    """添加学员函数"""
+    # 添加用户输入学员信息
+    # 1 用户书臣：学号、姓名、手机号
+
+    new_id = input('请输入学号：')
+    new_name = input('请输入姓名：')
+    new_tel = input('请输入手机号：')
+
+    # 声明info是全局变量
+    global info
+    #2 判断是否添加这个学员：如果学员姓名一斤存在报错提示：如果不存在则添加数据
+    # 2.1 不允许姓名重复：判断用户输入的姓名和 列表里面字典的name对应的值 相等 提示
+    for i in info:
+        if new_name == i['name']:
+            print('此用户已经存在')
+            return # 此时，退出当前函数，后面添加信息的代码不执行
+
+    # 2.2 如果输入的姓名不存在，添加数据：准备空字典，字典新增数据，列表追加字典
+    info_dict = {}
+
+    # 字典新增数据
+    info_dict['id'] = new_id
+    info_dict['name'] = new_name
+    info_dict['tel'] = new_tel
+    print(info_dict) # 打印一下
+
+    # 列表追加字典
+    info.append(info_dict)
+    print(info)
+```
+
+
+
+#### 17.3.2.2 删除学员
+
+- 需求分析
+
+按用户输入的姓名进行删除
+
+1、用户输入目标学员姓名
+
+2、检查这个学员是否存在
+
+​      2.1 如果存在，则列表删除这个数据
+
+​      2.2 如果不存在，则提示“该用户不存在”
+
+3、对应的if条件成立的位置调用该函数
+
+- 代码实现
+
+```python
+# 删除学员信息的函数
+def del_info():
+    """删除学员信息"""
+    # 1、用户输入目标学员姓名
+    del_name = input('请输入要删除的学员姓名：')
+
+    global info
+    # 2、检查这个学员是否存在
+    for i in info:
+        if del_name == i['name']:
+            info.remove(i)
+            break
+    else:
+        print('该学员不存在')
+    print(info)
+```
+
+
+
+#### 17.3.2.3 修改学员
+
+- 需求分析
+
+1、用户输入目标学员姓名
+
+2、检查这个学员是否存在
+
+​      2.1 如果存在，则修改这个学员的信息，例如手机号
+
+​      2.2 如果不存在，则报错
+
+3、对应的if条件成立的位置调用该函数
+
+```python
+# 修改学员信息的函数
+def modify_info():
+    """修改函数"""
+    # 1、用户输入目标学员姓名
+    modify_name = input('请输入要修改学员的姓名：')
+    global info
+    # 2、检查这个学员是否存在
+    #    2.1 如果存在，则修改这个学员的信息，例如手机号
+    #    2.2 如果不存在，则报错
+    for i in info:
+        if modify_name== i['name']:
+            # 将tel这个key修改值，并终止此循环
+            i['tel'] = input('请输入新的手机号：')
+            break
+    else: # 循环都没执行，自然不存在
+        print('学员不存在')
+    print(info)
+```
+
+#### 17.3.2.4  查询学员信息
+
+- 需求分析
+
+1、用户输入目标学员名称
+
+2、检查学员是否存在
+
+      2.1 如果存在，则显示这个学员的信息 
+
+​      2.2 如果不存在，则报错
+
+3、对应的if条件成立的位置调用该函数
+
+- 代码实现
+
+```python
+def search_info():
+    """查询学员信息"""
+    # 1、用户输入目标学员名称
+    search_name = input('请输入要查找的学员姓名：')
+    global  info
+    # 2、检查学员是否存在
+    #    2.1 如果存在，则显示这个学员的信息
+    #    2.2 如果不存在，则报错
+    for i in info:
+        if search_name == i['name']:
+            print('查到找学习信息如下：--------')
+            print(f"该学员的学号为{i['id']},姓名是{i['name']}, 手机号是{i['tel']}")
+            break
+    else:
+        print('不存在')
+    # 3、对应的if条件成立的位置调用该函数
+```
+
+#### 17.3.2.5  显示所有成员信息
+
+- 需求分析
+
+打印所以学员信息
+
+- 代码实现
+
+```python
+# 显示所有学员信息
+def print_all():
+    """显示所有学员信息"""
+    #1、打印提示字
+    print('学号\t姓名\t手机号')
+    #2、打印所有学员的数据
+    for i in info:
+        print(f"{i['id']}\t {i['name']}\t {i['tel']}")
+```
+
+
+
+#### 17.3.2.6 退出系统功能
+
+在用户输入序号6的时候要退出系统，代码如下：
+
+```python
+elif user_num == 6:
+    exit_fla = input('确定要退出系统 yes or no:')
+    if exit_fla == 'yes':
+        break
+```
+
+
+
+# 十八、递归
+
+## 18.1 递归的应用场景
+
+**递归是一种编程思想，应用场景：**
+
+1. 在我们日常开发中，如果要遍历一个文件夹下面所有的文件，通常会使用递归来实现；
+2. 在后续的算法学习中，很多算法都离不开递归，例如：快速排序。
+
+## 18.2 递归的特点
+
+- 函数内部自己调用自己
+- 必须有出口
+
+## 18.3 应用：3以内数字累加和
+
+虽然方法很多（sun(range(4)),while等实现），但是您能想到递归的方法嘛？？？滋滋
+
+```python
+#3+2+1
+def sum_numbers(num):
+    # 1、如果是1，直返返回1 -- 出口
+    if num ==1:
+        return  1
+    # 2、如果不是1， 重复执行累加并返回结果
+    return num + sum_numbers(num-1)
+sum_result = sum_numbers(3)
+print(sum_result)
+```
+
+ ![1587447724171](../../../%E7%BC%96%E7%A8%8B%E8%B5%84%E6%96%99%E5%8F%8A%E8%AE%BA%E6%96%87/%E8%AF%BB%E4%B9%A6/%E3%80%9016%E3%80%91python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/assets/1587447724171.png)
+
+# 十九、lambda表达式
+
+## 19.1 lambda的应用场景
+
+如果一个函数有一个返回值，并且只有一句代码，可以使用lambda简化
+
+## 19.2 lambda语法
+
+```python
+lambda 参数列表 ： 表达式
+```
+
+**注意：**
+
+1.  lambda表达式的参数可有可无，函数的参数在 lambda表达式中完全适用。
+2.  lambda表达式能接收任何数量的参数但只能返回一个表达式的值。
+
+**快速入门：**
+
+```python
+#需求：函数 返回值100
+def fn1():
+    return 200
+result = fn1()
+print(result)
+
+
+# lambda 匿名函数
+# lambda 参数列表 ：表达式
+fn2 = lambda : 100
+print(fn2) # lambda内存地址
+#100返回值 调用函数
+print(fn2())
+```
+
+**注意：**直接打印 lambda表达式，输出的是此 lambda的内存地址
+
+## 19.3 实例
+
+### 19.3.1 计算a+b
+
+```python
+def add(a,b):
+    return a+b
+result = add(1,2)
+print(result)
+
+```
+
+不难发现代码太多了。
+
+### 19.3.2 lambda实现
+
+```python
+fn1 = lambda a,b : a+b
+print(fn1(1,2))
+```
+
+## 19.4 lambda参数
+
+### 19.4.1 无参数
+
+```python
+fn1 = lambda : 100
+print(fn1()) # 100
+```
+
+### 19.4.2 一个参数
+
+```python
+fn1 = lambda a:a
+print(fn1('hello word'))
+```
+
+
+
+### 19.4.3 默认参数
+
+```python
+fn1 = lambda a,b,c=100:a+b+c
+print(fn1(10,20)) # 100
+```
+
+
+
+### 19.4.4 可变参数：*args
+
+参数个数不定，根据程序员输入界定
+
+```python
+fn1 = lambda *args: args
+print(fn1(10,20,30))
+```
+
+**注意：**这里可变参数传入到lambda之后，返回值为==元组==
+
+### 19.4.5 可变参数：**kwargs
+
+```python
+fn1 = lambda **kwargs :kwargs
+print(fn1(name='python',arg=20))
+```
+
+**注意：**这里可变参数传入到lambda之后，返回值为==字典==
+
+## 19.5 lambda应用
+
+### 19.5.1 带判断的lambda
+
+```python
+fn1 = lambda a, b: a if a>b else b
+print(fn1(1,2))
+```
+
+
+
+### 19.5.2 列表数据按字典key的值排序
+
+```python
+students = [
+    {'name':'jjk', 'age':20},
+    {'name':'ROSE', 'age':18},
+    {'name':'Jack', 'age':23}
+]
+
+#按name值升序排列
+students.sort(key=lambda x:x['name'])
+print(students)
+
+#按name值升序排列
+students.sort(key=lambda x : x['name'],reverse=True)
+print(students)
+
+# 按age值升序排序
+students.sort(key=lambda x : x['age'])
+print(students)
+```
+
+
+
+# 二十、高阶函数
+
+==把函数作为参数传入==，这样的函数称为高阶函数，高阶函数是函数式编程的体现。函数式编程就是指这种高度抽象的编程范式。
+
+## 20.1 ==体验高阶函数==
+
+在python中，`abs()` 函数可以完成对数字求绝对值计算
+
+```python
+abs(-10) # 10
+```
+
+`round()` 函数可以完成对数字的四舍五入计算
+
+```python
+round(1.2) # 1
+round(1.9) # 2
+```
+
+需求：任意两个数字，按照指定要求整理数字后再进行求和计算。
+
+- **方法1**
+
+```python
+def add_num(a,b):
+    return abs(a) + abs(b)
+result = add_num(-1,2)
+print(result) # 3
+```
+
+- **方法2**：f是第三个参数，用来接收将来传入的函数
+
+```python
+def sum_num(a,b,f):
+    return f(a) +f(b)
+result = sum_num(-1,2,abs)
+print(result) #3
+
+result2 = sum_num(1.1,1.3,round)
+print(result2)
+```
+
+注意：两种方法对比之后，发现，方法2的代码会更加简洁，函数灵活性更高。
+
+函数式编程大量使用函数，减少了代码的重复，因此程序比较短，开发速度较快。
+
+## 20.2 内置高阶函数
+
+### 20.2.1 map()
+
+`map(func,lst)` ，将传入的函数变量func作用到st变量的每个元素中，并将结果组成新的列表（Python2）/
+迭代器（Python3）返回。
+
+需求：计算 `1ist1` 序列中各个数字的2次方。
+
+```python
+list1 = [1,2,3,4,5]
+def func(x):
+    return x**2
+
+result = map(func,list1)
+
+print(result) # <map object at 0x0000024DA11BC438>
+print(list(result)) # [1, 4, 9, 16, 25]
+"""
+1、准备列表
+2、准备2次方计算的函数
+3、调用map
+"""
+```
+
+
+
+### 20.2.2 reduce()
+
+`reduce(func,lst)`，其中func必须有两个参数。每次func计算的结果继续和序列的下一个元素做累计计算。
+
+注意：`reduce()` 传入的参数func必须接收**2个参数。**
+
+需求：计算 `list1` 序列中各个数字的累加和
+
+```python
+import functools
+list1 = [1,2,3,4,5]
+def func(a,b):
+    return  a+b
+
+result = functools.reduce(func,list1)
+print(result) # 15
+```
+
+
+
+### 20.2.3 filter()
+
+`filter(func,lst)` 函数用于过滤序列，过滤掉不符合条件的元素，返回一个filter对象。如果要转换为列表，可以使用 `list()` 来转换。
+
+```python
+list1 = [1,2,3,4,5,6,7,8,9,10]
+
+def func(x):
+    return x %2 ==0 # 求偶数
+
+result = filter(func,list1)
+print(result) # <filter object at 0x000002015D4AC438>
+print(list(result)) # [2, 4, 6, 8, 10]
+```
+
+## 20.3 总结
+
+- 递归
+
+    函数内部自己调用自己
+
+    必须有出口
+
+- lambda
+
+    语法
+
+    ```python
+    lambda 参数列表 ： 表达式
+    ```
+
+    lambda的参数形式
+
+    无参数
+
+    ```python
+    lambda : 表达式
+    ```
+
+    一个参数
+
+    ```python
+    lambda 参数：表达式
+    ```
+
+    默认参数
+
+    ```python
+    lambda key= value:表达式
+    ```
+
+    不定长位置参数
+
+    ```python
+    lambda *args : 表达式
+    ```
+
+    不定长关键字参数
+
+    ```python
+    lambda **kwargs:表达式
+    ```
+
+- 高阶函数
+
+    作用：把函数作为参数传入，简化代码
+
+    内置高阶函数：map()，reduce()，filter()
+
+
+
+# 二十一、文件
+
+**目标**
+
+- 文件操作的作用
+
+- 文件的基本操作
+
+    打开
+
+    读取
+
+    关闭
+
+- 文件备份
+
+- 文件和文件夹的操作
+
+## 21.1 文件操作的作用
+
+**思考：**什么是文件？文件操作包含什么？
+
+**答：**打开、关闭、读、写、复制
+
+**思考：**文件操作的的作用是什么？
+
+**答：**读取内容、写入内容、备份内
+
+**总结：**文件操作的作用就是把一些内容数据）存储存放起来，可以让程序下一次执行的时候直接使
+用，而不必重新制作一份，省时省力。
+
+---
+
+## 21.2 文件的基本操作
+
+### 21.2.1 文件操作步骤
+
+1、打开文件
+
+2、读写等操作
+
+3、关闭文件
+
+注意：可以只打开和关闭文件，不进行任何读写操作。
+
+```python
+f = open('test.txt','w')
+f.write('aaa')
+f.close()
+```
+
+
+
+----
+
+**1、打开**
+
+在python，使用open函数，可以打开一个已经存在的文件，或者创建一个新文件，语法如下：
+
+```python
+open(name,mode)
+```
+
+name：是要打开的目标文件名的字符串（可以包含文件所在的具体路径）。
+
+mode：设置打开文件的模式（访问模式：只读、写入、追加等。
+
+**2、打开文件模式之读访问模式**
+
+ ![image-20200422145841750](assets/image-20200422145841750.png)
+
+```python
+# r 如果文件不存在，就会报错;r只是读
+f = open('test.txt','r')
+f.close()
+
+# w 如果文件不存在，新建文件;w会覆盖式写入
+f = open('test.txt','w')
+f.write('aa')
+f.close()
+
+# a 追加，如果文件不存在，新建文件；会以追加的方式写入文件。
+f = open('text.txt','a')
+f.write('bbbb')
+f.close()
+
+# 访问模式参数是否可以省略   如果省略表示访问默认为r，
+f = open('test.txt')
+f.close()
+```
+
+### 21.2.2 读
+
+- read()
+
+```
+文件对象.read(num)
+```
+
+num表示要从文件中读取的数据的长度（单位是字节），如果没有传入num，那么就表示读取文
+件中所有的数据。
+
+```python
+f = open('test.txt')
+#content = f.read()
+content = f.read(2)
+print(content)
+
+f.close()
+```
+
+1、文件内容如果换行，底层有\n,会有字节占位，导致read书写参数读取出来的眼睛看到的个数和参数值不匹配。
+
+2、read()不写参数读取所有内容。
+
+----
+
+- readlines()
+
+readlines可以按照行的方式把整个文件中的内容进行一次性读取，并且返回的是一个列表，其中每一行
+的数据为一个元素。
+
+```python
+f = open('test.txt','r')
+content = f.readlines()
+print(content) # ['aaa\n', 'bbb\n', 'ccc']
+
+f.close() 
+```
+
+---
+
+- readline()
+
+readline()一次读取一行内容
+
+```python
+f = open('test.txt','r')
+content = f.readline()
+print(f'第一行：{content}')
+
+content = f.readline()
+print(f'第二行：{content}')
+
+f.close()
+"""
+第一行：aaa
+第二行：bbb
+"""
+```
+
+### 21.2.3 访问模式的特点
+
+```python
+# 1、r+ 和 w+ a+区别
+# 2、文件指针对数据读取的影响
+
+# r+：r没有该文件则会报错，文件指针在开头，所以能读取出来数据
+f = open('test.txt', 'r+')
+# w+：没有该文件会新建该文件，w特点：文件指针在开头，用新内容覆盖原内容
+f = open('test.txt', 'w+')
+
+#a+：没有该文件会新建该文件；文件指针在结尾，无法读取数据（文件指针后面没有数据）
+f = open('test.txt', 'a+')
+
+con  =f.read()
+print(con)
+f.close()
+```
+
+### 21.2.4 seek()
+
+**作用：**用来移动文件指针
+
+**语法如下：**
+
+```python
+文件对象.seek(偏移量，起始位置)
+```
+
+> 起始位置：
+>
+> - 0：文件开头
+> - 1：当前位置
+> - 2：文件结尾
+
+
+
+```python
+"""
+语法：文件对象.seek(偏移量，起始位置) 0开头1当前2结尾
+目标：
+    1. r改变文件指针位置：改变读取数据开始位置或把文件指针放结尾（无法读取数据）
+    2. a改变文件指针位置，做到可以读取出来数据
+"""
+f = open('test.txt','r+')
+# 1、改变读取数据起始位置
+# f.seek(2,0)
+# 1、把文件指针放结尾（无法读取数据）
+# f.seek(0,2)
+
+f = open('test.txt','a+')
+#2. a改变文件指针位置，做到可以读取出来数据
+f.seek(0,0)
+
+
+con = f.read()
+print(con)
+f.close()
+
+```
+
+## 21.3 文件备份
+
+###21.3.1 实现
+
+需求：用户输入当前目录下任意文件名，程序完成对该文件的备份功能（备份文件名为xx[备份]后缀，例
+如：test[备份].txt）。
+
+**步骤**
+
+1. 接收用户输入的文件名
+2. 规划备份文件名
+3. 备份文件写入数据
+
+**代码实现**
+
+1、接收用户输入目标文件名
+
+```python
+old_name = input('请输入您要备份的文件名：')
+```
+
+2、规划备份文件名
+
+​      2.1 提取目标文件后缀
+
+​      2.2 组织备份的文件名，xx[备份]后缀
+
+```python
+# 2. 规划备份文件名
+# 2.1 提取目标文件后缀
+# == 找到名字中的点 -- 名字和后缀分离--最右侧的点才是后缀的点 -- 字符串查找某个子串rfind
+index = old_name.rfind('.') # .
+print(index)
+
+# 2.2 组织备份的文件名，xx[备份]后缀   就文件名+[备份]+后缀
+# 原名字就是字符串中的一部分子串 -- 切片[开始：结束：步长]
+# print(old_name[:index])
+# print(old_name[index:])
+new_name = old_name[:index] + '[备份]' + old_name[index:]
+print(new_name)
+
+```
+
+3、备份文件写入数据
+
+3.1 打开源文件和备份文件
+
+3.2 将源文件数据写入备份文件
+
+3.3 关闭文件
+
+```python
+# 3. 备份文件写入数据
+# 3.1 打开文件
+old_f = open(old_name,'rb')
+new_f = open(new_name,'wb')
+
+# 3.2 将原文件数据写入备份文件
+# 如果不确定文件大仙，循环读取写入，当读取出来的数据没有了终止循环
+while True:
+    con = old_f.read(1024)
+    if len(con) ==0:
+        break
+    new_f.write(con)
+
+# 3.3 关闭文件
+old_f.close()
+new_f.close()
+```
+
+### 21.3.2 思考
+
+如果用户输入.txt，这是一个无效文件，程序如何更改才能限制只有有效的文件名才能备份？
+
+答：添加条件判断即可。
+
+```python
+old_name = input('请输入您要备份的文件名：')
+index = old_name.rfind('.')
+
+if index>0:
+    postfix = old_name[index:]
+new_name = old_name[:index] + '[备份]' +postfix
+
+old_f = open(old_name, 'rb')
+new_f = open(new_name, 'wb')
+
+while True:
+    con = old_f.read(1023)
+    if len(con) == 0:
+        break
+    new_f.write(con)
+ # 3.3 关闭文件
+old_f.close()
+new_f.close()   
+```
+
+
+
+# 二十二、文件函数操作
+
+在 Python中文件和文件夹的操作要借助os模块里面的相关功能，具体步骤如下：
+
+1、导入os模块
+
+```
+import os
+```
+
+2、使用os模块相关功能
+
+```
+os.函数名()
+```
+
+##  22.1 文件操作
+
+### 22.1.1 文件重命名
+
+```python
+# os.rename(目标文件名，新文件名)
+import os
+
+# 1、rename():重命名
+os.rename('test.txt', 'text.txt')
+```
+
+
+
+### 22.1.2 删除文件
+
+```python
+# 2、renove():删除文件
+os.remove('test[备份].txt')
+```
+
+
+
+## 22.2 文件夹操作
+
+### 22.2.1 创建文件夹
+
+```python
+os.mkdir(文件夹名字)
+import os
+os.mkdir('aa')
+```
+
+
+
+### 22.2.2 删除文件夹
+
+```python
+os,rmdir(文件夹名字)
+import os
+os.rmdir('aa')
+```
+
+
+
+### 22.2.3 获取当前目录
+
+```python 
+os.getcwd()
+import os
+print(os.getcwd()) # F:\Pycharm\Pycharm_workstation\python系统学习
+```
+
+
+
+### 22.2.4 改变默认目录
+
+```python
+os.chdir(目录)
+import os
+# 需求：在aa里面创建bb文件夹：1、切换到aa。 2创建bb
+os.mkdir('aa')
+os.chdir('aa')
+os.mkdir('bb')
+
+```
+
+
+
+### 22.2.5 获取目录列表
+
+```python
+os.listdir(目录)
+import os
+# listdir():获取某个文件夹下所有文件，返回一个列表
+print(os.listdir()) #
+print(os.listdir('aa'))# 获取aa文件夹下。。。。
+```
+
+ ## 22.3 应用案例
+
+需求：批量修改文件名，既可添加指定字符串，又能删除指定字符串。
+
+- 步骤
+
+    1、设置添加删除字符串的的标识
+
+    2、获取指定目录的所有文件
+
+    3、将原有文件名添加/删除指定字符串，构造新名字
+
+    4、os. rename（）重命名
+
+- 代码
+
+```python
+import os
+# 1、找到所有文件，获取指定文件夹的目录列表 -- listdir()
+file_list = os.listdir()
+print(file_list)
+
+# 2、构造名字
+for i in file_list:
+    # new_name = 'python_'+原文件i
+    new_name = 'python_' + i
+    # 3、重命名
+    os.rename(new_name)
+```
+
+```python
+# 1、将指定文件夹所有文件重命名 python xxx
+# 2、删除python_ 重命名：
+
+import os
+# 构造条件的数据
+flag = 1
+
+# 1、找到所有文件，获取指定文件夹的目录列表 -- listdir()
+file_list = os.listdir()
+print(file_list)
+
+# 2、构造名字
+for i in file_list:
+    if flag ==1:
+        # new_name = 'python_'+原文件i
+        new_name = 'python_' + i
+    #
+    elif flag ==2:
+        # 删除前缀
+        num = len('python_')
+        new_name = i[num:]
+    #  3、重命名
+    os.rename(new_name)
+```
+
+## 22.4 总结
+
+- **文件操作步骤**
+
+    打开
+
+    ```
+    文件对象= open(目标文件，访问模式)
+    ```
+
+    操作：读
+
+    ```
+    文件对象.read()
+    文件对象.readlines()
+    文件对象.readline()
+    ```
+
+    操作：写
+
+    ```
+    文件对象.write()
+    ```
+
+    操作：seek()
+
+    关闭
+
+    ```
+    文件对象.close()
+    ```
+
+- **主要访问模式**
+
+    w：写，文件不存在则新建该文件
+
+    r：读，文件不存在则报错
+
+    a：追加
+
+- **文件和文件夹操作**
+
+    重命名：os.rename()
+
+    获取当前目录：os.getcwd()
+
+    获取目录列表：os.listdir()
+
+
 
